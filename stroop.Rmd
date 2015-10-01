@@ -10,15 +10,15 @@ output:
 
 ``In a Stroop task, participants are presented with a list of words, with each word displayed in a color of ink. The participant’s task is to say out loud the color of the ink in which the word is printed. The task has two conditions: a congruent words condition, and an incongruent words condition. In the congruent words condition, the words being displayed are color words whose names match the colors in which they are printed: for example RED, BLUE. In the incongruent words condition, the words displayed are color words whose names do not match the colors in which they are printed: for example PURPLE, ORANGE." For each case, the time it takes to name the ink colors in equally-sized lists is measured and recorded.
 
-For these tests, the independent variable is the words condition and the dependent variable is the time it takes to name the ink colors, $\mu$. Additionally the following hypotheses are tested:
+For these tests, the independent variable is the words condition and the dependent variable is the time it takes to name the ink colors, $\mu$. With the data given, I will examine if the two different samples have different means because they come from different populations or if they have different means because of chance. The null hypothesis states that the population mean completion time does not increase significantly with the use of an incongruent words condition. The alternative hypothesis states that an incongruent words conditions significantly increases the population mean completion time. The following hypotheses are tested:
 
-Null Hypothesis, $H_0: \mu_D = \mu_{congruent} - \mu_{incongruent} = 0$,
+Null Hypothesis, $H_0: \mu_{congruent} - \mu_{incongruent} \geq 0$,
 
 and 
 
-Alternative Hypothesis, $H_a: \mu_D \neq 0$.
+Alternative Hypothesis, $H_a: \mu_{congruent} - \mu_{incongruent} < 0$.
 
-The null hypothesis states that there is not a difference in the time it takes to name the ink colors due to words condition. The alternative hypothesis, states that there is a significant difference in the measured time due to the words conditions. I plan to perform a two-tailed dependent t-test with $\alpha$ = 0.05 on the sample difference. The dependent t-test will help determine whether there is a statistically significant difference between the means of the congruent and incongruent times. A dependent t-test is applicable when there there are two conditions on subjects. Here it is the congruent and incongruent words conditions.
+I plan to perform a one-tailed dependent t-test with $\alpha$ = 0.05. The dependent t-test will help determine whether the increase in the mean completion time of the incongruent samples is due to a difference in populations. A dependent t-test is applicable when there are less than 30 samples, the population's standard deviation is unknown, and the population distribution is unknown (applicable when it is not normal).
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, packages}
 # Load all of the packages that you end up using
@@ -55,7 +55,7 @@ SD <- sd(stroop[["Congruent"]] - stroop[["Incongruent"]])
 S <- SD/sqrt(n)
 ```
 
-Before testing, the hypotheses, it is a good idea to examine some descriptive statistics and plots. The mean time of completion for the congruent list, $\overline{x}_{congruent}$, is 14.051 s. The mean time of completion for the incongruent list, $\overline{x}_{incongruent}$, is 22.0159 s. The mean difference between the two groups, $\overline{x}_D = \overline{x}_{congruent} - \overline{x}_{incongruent}$, is -7.965 s with a standard error, $S$, equal to 0.993 s. The two histograms below also show that the distribution of completion times for the incongruent words sample is centered at a longer time period than it is for the congruent words sample. Additionally, the histograms justify the use of a t-statistics over z-statistics since the histograms do no appear perfectly normal.
+Before testing, the hypotheses, it is a good idea to examine some descriptive statistics and plots. The mean time of completion for the congruent list sample, $\overline{x}_{congruent}$, is 14.051 s. The mean time of completion for the incongruent list sample, $\overline{x}_{incongruent}$, is 22.0159 s. The mean difference between the two samples, $\overline{x}_D = \overline{x}_{congruent} - \overline{x}_{incongruent}$, is -7.965 s with a standard error, $S$, equal to 0.993 s. The two histograms below also show that the distribution of completion times for the incongruent words sample is centered at a longer time period than it is for the congruent words sample. Additionally, the histograms justify the use of a t-statistics over z-statistics since the histograms do not appear perfectly normal, but are not highly skewed.
 
 ```{r echo = FALSE, plots}
 # Plot histograms
@@ -78,9 +78,9 @@ grid.arrange(plot_1, plot_2, ncol = 1)
 t <- x_d/S
 ```
 
-The t-statistic for the two samples is -8.021. With $\alpha = 0.05$ and 23 degrees of freedom, the t-critical value for a two-tailed test is 2.069. The p-value calculated from the t-statistic and 23 degrees of freedom gives a p-value that is less than 0.0001.
+The t-statistic for the two samples is -8.021. With $\alpha = 0.05$ and 23 degrees of freedom, the t-critical value for a one-tailed test is -1.714 The p-value calculated from the t-statistic and 23 degrees of freedom gives a p-value that is less than 0.0001.
 
-Because the p-value is less than 0.025 and the |t-statistic| is greater than the |t-critical| value, I reject the null hypothesis. Therefore, there is a significant difference in the completion time due to word condition. The data shows that the use of the incongruent word condition leads to an average longer time of completion. Given that the effect of incongruent words is named (Stroop Effect), the results agree with my expectations.
+Because the p-value is less than 0.05 and the |t-statistic| is greater than the |t-critical| value, I reject the null hypothesis. Therefore, difference in the completion time due to word condition is likely because the the samples come from two different populations and not by chance. The data shows that the use of the incongruent word condition leads to an average longer time of completion. Given that the effect of incongruent words is named (Stroop Effect), the results agree with my expectations.
 
 There are a couple theories as to why the Stroop Effect occurs. They include:
 
@@ -94,4 +94,6 @@ A similar test is the Numerical Stroop Test which shows the relationship between
 
 #####References
 
-Udacity Statistics Class Notes
+1. Udacity Statistics Class Notes
+2. Minitab Support: http://support.minitab.com/en-us/minitab/17/topic-library/basic-statistics-and-graphs/hypothesis-tests/basics/what-is-a-hypothesis-test/
+3. T-Score vs. Z-Score: What’s the Difference?: http://www.statisticshowto.com/when-to-use-a-t-score-vs-z-score/
